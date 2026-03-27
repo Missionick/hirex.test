@@ -203,28 +203,50 @@
     }
 
     /* MEGA PANELS */
-    .mega-panel {
+    /* MEGA MENU WRAPPER (Apple Style) */
+    #mega-menu-wrap {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
       z-index: 1001;
-      background: #fff;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      padding: 36px 0 40px;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, visibility 0s linear 0.4s;
+      pointer-events: none;
+    }
+
+    #main-nav.is-open #mega-menu-wrap {
+      height: auto; /* Will be set via JS */
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+      transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, visibility 0s linear 0s;
+    }
+
+    .mega-panel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 0 52px;
       visibility: hidden;
       opacity: 0;
-      transform: translateY(-6px);
-      transition: opacity 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0s linear 0.28s;
-      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.4s;
     }
 
     .mega-panel.visible {
       visibility: visible;
       opacity: 1;
       transform: translateY(0);
-      transition: opacity 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0s linear 0s;
-      pointer-events: all;
+      transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0s;
     }
 
     .mega-grid {
@@ -232,72 +254,86 @@
       margin: 0 auto;
       padding: 0 48px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
+      grid-template-columns: 2fr 1fr 1.2fr;
+      gap: 60px;
     }
 
     .mega-col {
-      padding: 0 28px;
-      border-right: 1px solid rgba(0, 0, 0, 0.07);
+      padding: 0;
+      opacity: 0;
+      transform: translateY(15px);
     }
 
-    .mega-col:first-child {
-      padding-left: 0;
+    .mega-panel.visible .mega-col {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease out, transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    .mega-col:last-child {
-      border-right: none;
-      padding-right: 0;
-    }
+    /* Staggering columns */
+    .mega-panel.visible .mega-col:nth-child(1) { transition-delay: 0.1s; }
+    .mega-panel.visible .mega-col:nth-child(2) { transition-delay: 0.15s; }
+    .mega-panel.visible .mega-col:nth-child(3) { transition-delay: 0.2s; }
+    .mega-panel.visible .mega-col:nth-child(4) { transition-delay: 0.25s; }
 
     .mega-label {
-      font-size: 11px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 500;
       color: var(--text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 12px;
-      padding-left: 14px;
+      margin-bottom: 16px;
       display: block;
+    }
+
+    /* Large Primary Links (Apple Style) */
+    .mlink-large {
+      display: block;
+      width: fit-content;
+      font-size: 25px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: color 0.2s;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      cursor: pointer;
+    }
+
+    .mlink-large:hover {
+      color: var(--accent);
+    }
+
+    /* Secondary Links */
+    .mlink-sub {
+      display: block;
+      width: fit-content;
+      padding: 6px 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .mlink-sub:hover {
+      color: var(--accent);
     }
 
     .mlink {
       display: block;
-      padding: 8px 12px 8px 14px;
+      width: fit-content;
+      padding: 6px 12px;
       border-radius: 6px;
       text-decoration: none;
       cursor: pointer;
-      position: relative;
-      transition: background 0.15s;
-      margin-bottom: 1px;
-    }
-
-    .mlink::before {
-      content: '';
-      position: absolute;
-      left: 3px;
-      top: 18%;
-      bottom: 18%;
-      width: 2px;
-      border-radius: 2px;
-      background: var(--accent);
-      opacity: 0;
-      transform: scaleY(0);
-      transform-origin: center;
-      transition: opacity 0.18s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      color: var(--text-secondary);
+      transition: color 0.2s, background 0.15s;
     }
 
     .mlink:hover {
-      background: rgba(143, 64, 198, 0.06);
-    }
-
-    .mlink:hover::before {
-      opacity: 1;
-      transform: scaleY(1);
-    }
-
-    .mlink:hover .mlink-title {
       color: var(--accent);
+      background: rgba(143, 64, 198, 0.04);
     }
 
     .mlink-title {
@@ -2787,201 +2823,126 @@
       </div>
     </div>
 
-    <!-- MEGA: Browse -->
-    <div class="mega-panel" id="mp-browse">
-      <div class="mega-grid">
-        <div class="mega-col">
-          <span class="mega-label">Explore</span>
-          <a class="mlink" onclick="closeNav(); showPage('find-jobs')">
-            <div class="mlink-title">Find Jobs</div>
-            <div class="mlink-desc">2,400+ verified open roles</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('for-seekers')">
-            <div class="mlink-title">Career Resources</div>
-            <div class="mlink-desc">Guides, tips and tools</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('blog')">
-            <div class="mlink-title">Blog &amp; Advice</div>
-            <div class="mlink-desc">Insights from our recruiters</div>
-          </a>
+    <div id="mega-menu-wrap">
+      <!-- MEGA: Browse -->
+      <div class="mega-panel" id="mp-browse">
+        <div class="mega-grid">
+          <div class="mega-col">
+            <span class="mega-label">Browse</span>
+            <a class="mlink-large" onclick="closeNav(); showPage('find-jobs')">All Jobs</a>
+            <a class="mlink-large" onclick="closeNav(); showPage('find-jobs')">Technology</a>
+            <a class="mlink-large" onclick="closeNav(); showPage('find-jobs')">Finance</a>
+            <a class="mlink-large" onclick="closeNav(); showPage('find-jobs')">Marketing</a>
+            <a class="mlink-large" onclick="closeNav(); showPage('find-jobs')">Healthcare</a>
+            <a class="mlink-large" onclick="closeNav(); showPage('find-jobs')">Operations</a>
+            <a class="mlink-large" onclick="closeNav(); showPage('find-jobs')">Remote Roles</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-label">Quick Links</span>
+            <a class="mlink-sub" onclick="closeNav(); showPage('find-jobs')">Find a Role</a>
+            <a class="mlink-sub" onclick="closeNav(); showPage('auth')">Application Status</a>
+            <a class="mlink-sub" onclick="alert('Saved jobs')">Saved Jobs</a>
+            <a class="mlink-sub" onclick="showPage('blog')">Career Blog</a>
+            <a class="mlink-sub" onclick="showPage('seekers')">Interview Prep</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-label">Resources</span>
+            <a class="mlink-sub" onclick="alert('Resume Builder')">Resume Builder</a>
+            <a class="mlink-sub" onclick="alert('Salary Calculator')">Salary Calculator</a>
+            <a class="mlink-sub" onclick="alert('Skill Tests')">Skill Tests</a>
+            <a class="mlink-sub" onclick="alert('Mentorship')">Mentorship</a>
+            <a class="mlink-sub" onclick="alert('Employer Directory')">Employer Directory</a>
+
+            <div class="mega-promo" style="margin-top: 32px;">
+              <span class="mega-promo-tag">Today's Highlight</span>
+              <div class="mega-promo-title">147 new roles added this morning across all categories.</div>
+              <span class="mega-promo-cta" onclick="closeNav(); showPage('find-jobs')">Browse new listings →</span>
+            </div>
+          </div>
         </div>
-        <div class="mega-col">
-          <span class="mega-label">Categories</span>
-          <a class="mlink" onclick="closeNav(); showPage('find-jobs')">
-            <div class="mlink-title">Technology &amp; IT</div>
-            <div class="mlink-desc">680 open positions</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('find-jobs')">
-            <div class="mlink-title">Finance &amp; Business</div>
-            <div class="mlink-desc">420 open positions</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('find-jobs')">
-            <div class="mlink-title">Creative &amp; Marketing</div>
-            <div class="mlink-desc">310 open positions</div>
-          </a>
+      </div>
+
+      <!-- MEGA: Job Seekers -->
+      <div class="mega-panel" id="mp-seekers">
+        <div class="mega-grid">
+          <div class="mega-col">
+            <span class="mega-label">For Job Seekers</span>
+            <a class="mlink-large" onclick="closeNav(); showPage('for-seekers')">Overview</a>
+            <a class="mlink-large" onclick="closeNav(); showPage('for-seekers')">How it Works</a>
+            <a class="mlink-large" onclick="showPage('auth')">Create Profile</a>
+            <a class="mlink-large" onclick="showPage('blog')">Career Advice</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-label">Tools</span>
+            <a class="mlink-sub" onclick="alert('CV Review')">Free CV Review</a>
+            <a class="mlink-sub" onclick="alert('Salary Insights')">Salary Insights</a>
+            <a class="mlink-sub" onclick="alert('Job Alerts')">Job Alerts</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-label">Pro</span>
+            <div class="mega-promo">
+              <span class="mega-promo-tag">hireX Pro</span>
+              <div class="mega-promo-title">Get noticed faster with priority application status.</div>
+              <span class="mega-promo-cta" onclick="showPage('auth')">Go Pro today →</span>
+            </div>
+          </div>
         </div>
-        <div class="mega-col">
-          <span class="mega-label">More</span>
-          <a class="mlink" onclick="closeNav(); showPage('find-jobs')">
-            <div class="mlink-title">Healthcare</div>
-            <div class="mlink-desc">280 open positions</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('find-jobs')">
-            <div class="mlink-title">Operations &amp; Logistics</div>
-            <div class="mlink-desc">390 open positions</div>
-          </a>
+      </div>
+
+      <!-- MEGA: Employers -->
+      <div class="mega-panel" id="mp-employers">
+        <div class="mega-grid">
+          <div class="mega-col">
+            <span class="mega-label">For Employers</span>
+            <a class="mlink-large" onclick="closeNav(); showPage('for-employers')">Overview</a>
+            <a class="mlink-large" onclick="closeNav(); showPage('for-employers')">Post a Job</a>
+            <a class="mlink-large" onclick="showPage('contact')">Hiring Solutions</a>
+            <a class="mlink-large" onclick="showPage('auth')">Employer Dashboard</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-label">Services</span>
+            <a class="mlink-sub" onclick="showPage('emp-solutions')">Managed Recruitment</a>
+            <a class="mlink-sub" onclick="showPage('emp-solutions')">Executive Search</a>
+            <a class="mlink-sub" onclick="showPage('emp-solutions')">Workforce Planning</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-label">Partnership</span>
+            <div class="mega-promo">
+              <span class="mega-promo-tag">Hiring Fast?</span>
+              <div class="mega-promo-title">Our partners hire 3x faster than traditional methods.</div>
+              <span class="mega-promo-cta" onclick="showPage('contact')">Book a demo →</span>
+            </div>
+          </div>
         </div>
-        <div class="mega-col">
-          <span class="mega-label">Today's Highlight</span>
-          <div class="mega-promo">
-            <span class="mega-promo-tag">147 new roles today</span>
-            <div class="mega-promo-title">Fresh positions added this morning across all categories</div>
-            <span class="mega-promo-cta" onclick="closeNav(); showPage('find-jobs')">Browse new listings →</span>
+      </div>
+
+      <!-- MEGA: About -->
+      <div class="mega-panel" id="mp-about">
+        <div class="mega-grid">
+          <div class="mega-col">
+            <span class="mega-label">About hireX</span>
+            <a class="mlink-large" onclick="closeNav(); showPage('about')">Our Story</a>
+            <a class="mlink-large" onclick="openModal('modal-team')">Team</a>
+            <a class="mlink-large" onclick="openModal('modal-values')">Values</a>
+            <a class="mlink-large" onclick="showPage('contact')">Offices</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-label">People</span>
+            <a class="mlink-sub" onclick="openModal('modal-team')">Join the Team</a>
+            <a class="mlink-sub" onclick="showPage('blog')">Life at hireX</a>
+          </div>
+          <div class="mega-col">
+            <span class="mega-label">Regional</span>
+            <div class="mega-promo">
+              <span class="mega-promo-tag">Expanding</span>
+              <div class="mega-promo-title">Now serving 5 countries in the Adriatic region.</div>
+              <span class="mega-promo-cta" onclick="openModal('modal-regions')">See locations →</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- MEGA: Job Seekers -->
-    <div class="mega-panel" id="mp-seekers">
-      <div class="mega-grid">
-        <div class="mega-col">
-          <span class="mega-label">For Job Seekers</span>
-          <a class="mlink" onclick="closeNav(); showPage('for-seekers')">
-            <div class="mlink-title">Overview</div>
-            <div class="mlink-desc">How hireX works for candidates</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('seek-working')">
-            <div class="mlink-title">Working With hireX</div>
-            <div class="mlink-desc">What the journey looks like</div>
-          </a>
-        </div>
-        <div class="mega-col">
-          <span class="mega-label">Get Started</span>
-          <a class="mlink" onclick="closeNav(); showPage('seek-getting-started')">
-            <div class="mlink-title">Getting Started With hireX</div>
-            <div class="mlink-desc">From first step to first interview</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('seek-find-role')">
-            <div class="mlink-title">Discover Your Next Role</div>
-            <div class="mlink-desc">Smart search across the region</div>
-          </a>
-        </div>
-        <div class="mega-col">
-          <span class="mega-label">Premium</span>
-          <a class="mlink" onclick="closeNav(); showPage('seek-pro')">
-            <div class="mlink-title">hireX PRO</div>
-            <div class="mlink-desc">Priority access &amp; dedicated support</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('find-jobs')">
-            <div class="mlink-title">Browse Open Roles</div>
-            <div class="mlink-desc">2,400+ verified positions</div>
-          </a>
-        </div>
-        <div class="mega-col">
-          <span class="mega-label">Our Promise</span>
-          <div class="mega-promo">
-            <span class="mega-promo-tag">Candidate first</span>
-            <div class="mega-promo-title">We follow up. We tell you the truth. Every single time.</div>
-            <span class="mega-promo-cta" onclick="closeNav(); showPage('for-seekers')">Learn how we work →</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MEGA: Employers -->
-    <div class="mega-panel" id="mp-employers">
-      <div class="mega-grid">
-        <div class="mega-col">
-          <span class="mega-label">For Employers</span>
-          <a class="mlink" onclick="closeNav(); showPage('for-employers')">
-            <div class="mlink-title">Overview</div>
-            <div class="mlink-desc">How hireX works for companies</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('emp-solutions')">
-            <div class="mlink-title">Our Solutions</div>
-            <div class="mlink-desc">Tailored hiring for every need</div>
-          </a>
-        </div>
-        <div class="mega-col">
-          <span class="mega-label">Industries</span>
-          <a class="mlink" onclick="closeNav(); showPage('emp-industries')">
-            <div class="mlink-title">Industries We Serve</div>
-            <div class="mlink-desc">Sector expertise across the region</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('emp-workforce-tools')">
-            <div class="mlink-title">Workforce Tools</div>
-            <div class="mlink-desc">Smart tools for smarter hiring</div>
-          </a>
-        </div>
-        <div class="mega-col">
-          <span class="mega-label">Programs</span>
-          <a class="mlink" onclick="closeNav(); showPage('emp-workforce-programs')">
-            <div class="mlink-title">Workforce Programs</div>
-            <div class="mlink-desc">Structured hiring partnerships</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('contact')">
-            <div class="mlink-title">Contact Sales</div>
-            <div class="mlink-desc">Talk to our employer team</div>
-          </a>
-        </div>
-        <div class="mega-col">
-          <span class="mega-label">Get Started</span>
-          <div class="mega-promo">
-            <span class="mega-promo-tag">Quick start</span>
-            <div class="mega-promo-title">First shortlist delivered within 5 business days</div>
-            <span class="mega-promo-cta" onclick="closeNav(); showPage('auth')">Contact us today →</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MEGA: About -->
-    <div class="mega-panel" id="mp-about">
-      <div class="mega-grid">
-        <div class="mega-col">
-          <span class="mega-label">Company</span>
-          <a class="mlink" onclick="closeNav(); showPage('about')">
-            <div class="mlink-title">Our Story</div>
-            <div class="mlink-desc">How hireX started and why</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); openModal('modal-team')">
-            <div class="mlink-title">Meet the Team</div>
-            <div class="mlink-desc">The people behind the placements</div>
-          </a>
-        </div>
-        <div class="mega-col">
-          <span class="mega-label">Culture</span>
-          <a class="mlink" onclick="closeNav(); openModal('modal-values')">
-            <div class="mlink-title">Our Values</div>
-            <div class="mlink-desc">What we actually believe in</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); openModal('modal-regions')">
-            <div class="mlink-title">Regional Presence</div>
-            <div class="mlink-desc">ME, HR, RS, SI, BA — we're local</div>
-          </a>
-        </div>
-        <div class="mega-col">
-          <span class="mega-label">Connect</span>
-          <a class="mlink" onclick="closeNav(); showPage('contact')">
-            <div class="mlink-title">Contact Us</div>
-            <div class="mlink-desc">Get in touch with our team</div>
-          </a>
-          <a class="mlink" onclick="closeNav(); showPage('blog')">
-            <div class="mlink-title">Blog</div>
-            <div class="mlink-desc">Insights from our team</div>
-          </a>
-        </div>
-        <div class="mega-col">
-          <span class="mega-label">By the Numbers</span>
-          <div class="mega-promo">
-            <span class="mega-promo-tag">Est. 2019</span>
-            <div class="mega-promo-title">12,000+ placements. 94% placement rate. 5 countries.</div>
-            <span class="mega-promo-cta" onclick="closeNav(); showPage('about')">Read our story →</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </nav>
 
   <!-- ==================== HOME ==================== -->
@@ -5057,29 +5018,53 @@
 
     function openNav(id) {
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      const wrap = document.getElementById('mega-menu-wrap');
+      const targetPanel = document.getElementById('mp-' + id);
+      const mainNav = document.getElementById('main-nav');
+
       if (currentMenu === id) return;
+
+      // Handle old state
       if (currentMenu) {
-        var old = document.getElementById('mp-' + currentMenu);
-        if (old) old.classList.remove('visible');
-        var oldLi = document.getElementById('li-' + currentMenu);
+        const oldPanel = document.getElementById('mp-' + currentMenu);
+        if (oldPanel) oldPanel.classList.remove('visible');
+        const oldLi = document.getElementById('li-' + currentMenu);
         if (oldLi) oldLi.classList.remove('active');
       }
+
       currentMenu = id;
-      document.getElementById('main-nav').classList.add('is-open');
+      mainNav.classList.add('is-open');
       document.body.classList.add('nav-open');
       document.getElementById('li-' + id).classList.add('active');
-      document.getElementById('mp-' + id).classList.add('visible');
+      
+      // Calculate and set height
+      targetPanel.classList.add('visible');
+      const newHeight = targetPanel.offsetHeight;
+      wrap.style.height = newHeight + 'px';
     }
-    function scheduleClose() { closeTimer = setTimeout(function () { closeNav(); }, 120); }
-    function cancelClose() { if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } }
+
+    function scheduleClose() { 
+      closeTimer = setTimeout(function () { closeNav(); }, 150); 
+    }
+
+    function cancelClose() { 
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } 
+    }
+
     function closeNav() {
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-      document.getElementById('main-nav').classList.remove('is-open');
+      const wrap = document.getElementById('mega-menu-wrap');
+      const mainNav = document.getElementById('main-nav');
+
+      mainNav.classList.remove('is-open');
       document.body.classList.remove('nav-open');
       document.querySelectorAll('#nav-links li').forEach(function (li) { li.classList.remove('active'); });
       document.querySelectorAll('.mega-panel').forEach(function (p) { p.classList.remove('visible'); });
+      
+      if (wrap) wrap.style.height = '0px';
       currentMenu = null;
     }
+
     function toggleNav(id) { if (currentMenu === id) { closeNav(); } else { openNav(id); } }
     function toggleMobileMenu() {
       var nl = document.getElementById('nav-links');
